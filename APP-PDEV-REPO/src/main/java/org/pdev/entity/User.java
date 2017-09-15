@@ -1,24 +1,20 @@
 package org.pdev.entity;
 
-import java.io.Serializable;
-
-import javax.persistence.Column;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "user")
-public class User implements Serializable{
+public class User {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -26,21 +22,37 @@ public class User implements Serializable{
 	private String userName;
 	private String userPassword;
 	private String userEmail;
-	@ManyToOne(optional = false) 
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="roleId") 
 	private Role roleId;
+	@OneToOne(cascade = CascadeType.ALL, 
+            fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name="accountId")
+	private AccountDetail accountId; 
 	
 	public User() {
 		super();
 	}
-	public User(int userId, String userName, String userPassword, String userEmail, Role roleId) {
+	
+	public User(int userId, String userName, String userPassword, String userEmail, Role roleId,
+			AccountDetail accountId) {
 		super();
 		this.userId = userId;
 		this.userName = userName;
 		this.userPassword = userPassword;
 		this.userEmail = userEmail;
 		this.roleId = roleId;
+		this.accountId = accountId;
 	}
+
+	public AccountDetail getAccountId() {
+		return accountId;
+	}
+
+	public void setAccountId(AccountDetail accountId) {
+		this.accountId = accountId;
+	}
+
 	public int getUserId() {
 		return userId;
 	}
@@ -71,10 +83,5 @@ public class User implements Serializable{
 	public void setRoleId(Role roleId) {
 		this.roleId = roleId;
 	}
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-	
-	
-	
+		
 }

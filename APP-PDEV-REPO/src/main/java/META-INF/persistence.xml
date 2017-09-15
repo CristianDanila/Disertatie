@@ -6,8 +6,9 @@
 		transaction-type="RESOURCE_LOCAL">
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
   		
-  		<class> org.pdev.entity.User</class>
+  		<class> org.pdev.entity.AccountDetail</class>
   		<class> org.pdev.entity.Role</class>
+  		<class> org.pdev.entity.User</class>
 
 		<properties>
 		
